@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:core';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 List<dynamic> calculateQuantities(items) {
@@ -21,7 +22,7 @@ List<dynamic> calculateQuantities(items) {
 
 List<dynamic> organizeExpenses(List<dynamic> items) {
   Map<String, dynamic> uniqueItems = {};
-  
+
   items.removeWhere((element) => element.length == 0);
   for(var item in items) {
     List<dynamic> venda = [];
@@ -35,18 +36,38 @@ List<dynamic> organizeExpenses(List<dynamic> items) {
 
     if(uniqueItems.containsKey(item[0].toString())) {
       Map<String, dynamic> x = uniqueItems[item[0].toString()];
-      for(var z in x["prods"]) {
+      List<dynamic> prods = x["prods"];
+
+      for(var z in prods) {
         for(var v in venda) {
-          if(v["id_prod"] == z["id_prod"]) {
+          if(v["id"] == z["id"]) {
             z["qty"] += v["qty"];
           }
         }
       }
+
+      for(var v in venda) {
+        bool isIn = false;
+        for(Map<String, dynamic> prod in prods) {
+          if(prod["id"] == v["id"]) {
+            isIn = true;
+          }
+        }
+
+        if(!isIn) {
+          prods.add(v);
+          isIn = false;
+        }
+      }
+
+      Map<String, dynamic> temp = {"prods": prods, "date": item[0].toString()};
+      uniqueItems[item[0].toString()] = temp;
     } else {
       Map<String, dynamic> temp = {"prods": venda, "date": item[0].toString()};
       uniqueItems[item[0].toString()] = temp;
     }
   }
+
 
   return uniqueItems.values.toList();
 }

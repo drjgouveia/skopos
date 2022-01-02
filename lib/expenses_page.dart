@@ -19,7 +19,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
     double totalFinal = 0.0;
     texts.add(
         Padding(
-          padding: const EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 8.0),
+          padding: const EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 18.0),
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const [
@@ -58,7 +58,7 @@ class _ExpensesPageState extends State<ExpensesPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Text("Total:"),
-          Text("${totalFinal.toStringAsFixed(2)} €"),
+          Text("${totalFinal.toStringAsFixed(2)} €", style: TextStyle(fontWeight: FontWeight.w500)),
         ]
     );
   }
@@ -69,30 +69,37 @@ class _ExpensesPageState extends State<ExpensesPage> {
     return CarouselSlider.builder(
       itemCount: list.length,
       itemBuilder: (BuildContext context, int index, int pageViewIndex) =>
-        Container(
-          color: Colors.blueGrey[100],
-          child: Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: Center(
+        Card(
+          child: Container(
+            color: Colors.blueGrey[100],
+            child: Padding(
+              padding: const EdgeInsets.all(25.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(14.0),
-                    child: Text(
-                      list[index]["date"].toString(),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 17,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(14.0),
+                        child: Text(
+                          list[index]["date"].toString(),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 17,
+                          ),
+                        ),
                       ),
-                    ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 30.0),
+                        child: generateProdInfoText(list[index]),
+                      ),
+                      Container(
+                        alignment: Alignment.bottomCenter,
+                        child: generateFinalTotal(list[index])
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 15.0),
-                    child: generateProdInfoText(list[index]),
-                  ),
-                  generateFinalTotal(list[index]),
-                ],
+                ]
               ),
             ),
           ),
@@ -101,8 +108,8 @@ class _ExpensesPageState extends State<ExpensesPage> {
         height: 400,
         aspectRatio: 16/9,
         viewportFraction: 0.8,
-        initialPage: 0,
-        enableInfiniteScroll: true,
+        initialPage: temp.length-1,
+        enableInfiniteScroll: false,
         reverse: true,
         autoPlay: false,
         enlargeCenterPage: true,
