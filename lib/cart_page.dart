@@ -118,7 +118,7 @@ class _CartPageState extends State<CartPage> {
                         const Text(
                             "Conta",
                             style: TextStyle(
-                                fontSize: 25,
+                                fontSize: 23,
                                 fontWeight: FontWeight.w700
                             )
                         ),

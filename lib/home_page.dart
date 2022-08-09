@@ -191,7 +191,7 @@ class _HomePageState extends State<HomePage> {
                         const Text(
                           "Página principal",
                           style: TextStyle(
-                              fontSize: 25,
+                              fontSize: 23,
                               fontWeight: FontWeight.w700
                           )
                         ),
