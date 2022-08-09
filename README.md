@@ -14,7 +14,7 @@ The main page is meant to show all the products available.
 You are also able to add new products by pressing "Add Produto", showing:
 ![this page](./docs/add_new_prod_page.png)
 
-which will show the product after saved.
+which will show the product after saved, like this:
 ![like this](./docs/home_page_with_new_prod.png)
 
 With products on the database you can now use the cart page.
